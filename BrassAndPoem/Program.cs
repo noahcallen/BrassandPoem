@@ -57,7 +57,7 @@ do
         break;
 
         case 4: 
-        Console.WriteLine("");
+        UpdateProduct(products, productTypes);
         DisplayMenu();
         break;
     }
@@ -70,8 +70,7 @@ void DisplayAllProducts(List<Product> products, List<ProductType> productTypes)
 
     foreach (var product in products)
     {
-        
-        Console.WriteLine($"- {product.Name}");
+        Console.WriteLine($"Name: {product.Name}, Price: {product.Price}, Type: {product.ProductType.Name}");
 
     }//close for loop
 
@@ -154,7 +153,57 @@ void AddProduct(List<Product> products, List<ProductType> productTypes)
 
 void UpdateProduct(List<Product> products, List<ProductType> productTypes)
 {
-    throw new NotImplementedException();
+    Console.Write("Enter the Product ID of the product you want to update: ");
+      if (!int.TryParse(Console.ReadLine(), out int productId))
+      {
+          Console.WriteLine("Invalid Product ID. Please use a numeric value.");
+          return;
+      }
+
+      // Find the product by ID
+      Product productToUpdate = products.Find(p => p.ProductTypeId == productId);
+
+      if (productToUpdate == null)
+      {
+          Console.WriteLine("Product not found. Please check the Product ID.");
+          return;
+      }
+
+      Console.WriteLine($"Updating Product: {productToUpdate.Name}");
+
+      // Update Product Name
+      Console.Write($"Enter new name (or press Enter to keep '{productToUpdate.Name}'): ");
+      string newName = Console.ReadLine();
+      if (!string.IsNullOrEmpty(newName))
+      {
+          productToUpdate.Name = newName;
+      }
+
+      // Update Product Price
+      Console.Write($"Enter new price (or press Enter to keep {productToUpdate.Price}): ");
+      string newPriceInput = Console.ReadLine();
+      if (!string.IsNullOrEmpty(newPriceInput) && decimal.TryParse(newPriceInput, out decimal newPrice))
+      {
+          productToUpdate.Price = newPrice;
+      }
+      
+
+      // Update Product Type
+      Console.Write($"Enter new Product Type Name (or press Enter to keep '{productToUpdate.ProductType.Name}'): ");
+      string newTypeName = Console.ReadLine();
+      if (!string.IsNullOrEmpty(newTypeName))
+      {
+          productToUpdate.ProductType.Name = newTypeName;
+      }
+
+      Console.Write($"Enter new Product Type ID (or press Enter to keep {productToUpdate.ProductType.Id}): ");
+      string newTypeIdInput = Console.ReadLine();
+      if (!string.IsNullOrEmpty(newTypeIdInput) && int.TryParse(newTypeIdInput, out int newTypeId))
+      {
+          productToUpdate.ProductType.Id = newTypeId;
+      }
+
+      Console.WriteLine("Product updated successfully!");
 }
 
 // don't move or change this!
