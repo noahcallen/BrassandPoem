@@ -1,28 +1,29 @@
-﻿//create a "products" variable here to include at least five Product instances. Give them appropriate ProductTypeIds.
-
-
-//create a "productTypes" variable here with a List of ProductTypes, and add "Brass" and "Poem" types to the List. 
-
-//put your greeting here
-
-//implement your loop here
-
-using Inventory;
+﻿using Inventory;
 using InventoryType;
-using System;
+
 
 
 
 int userChoice = 0;
 
-List<Product> products = new List<Product>
-{
-    new Product {Name = "Trumpet", Price = 200.99M, ProductType = new ProductType {Name = "Brass", Id = 1}},
-    new Product {Name = "Tuba", Price = 400.99M, ProductType = new ProductType {Name = "Brass", Id = 1}},
-    new Product {Name = "Horn", Price = 300.99M, ProductType = new ProductType {Name = "Brass", Id = 1,}},
-    new Product {Name = "Flower", Price = 20.99M, ProductType = new ProductType {Name = "Poem", Id = 2}},
-    new Product {Name = "Dark", Price = 10.99M, ProductType = new ProductType {Name = "Poem", Id = 2}}
-};
+// create a "productTypes" variable here with a List of ProductTypes, 
+    // and add "Brass" and "Poem" types to the List.
+    List<ProductType> productTypes = new List<ProductType>
+    {
+        new ProductType { Id = 1, Name = "Brass" },
+        new ProductType { Id = 2, Name = "Poem" }
+    };
+
+    // create a "products" variable here to include at least five Product instances. 
+    // Give them appropriate ProductTypeIds by referencing the "productTypes" list.
+    List<Product> products = new List<Product>
+    {
+        new Product { Name = "Trumpet", Price = 200.99M, ProductType = productTypes[0], ProductTypeId = 987 },
+        new Product { Name = "Tuba", Price = 400.99M, ProductType = productTypes[0], ProductTypeId = 568 },
+        new Product { Name = "Horn", Price = 300.99M, ProductType = productTypes[0], ProductTypeId = 345 },
+        new Product { Name = "Flower", Price = 20.99M, ProductType = productTypes[1], ProductTypeId = 456 },
+        new Product { Name = "Dark", Price = 10.99M, ProductType = productTypes[1], ProductTypeId = 567 }
+    };
 
 void DisplayMenu()
 {
@@ -36,12 +37,14 @@ void DisplayMenu()
     userChoice = int.Parse(Console.ReadLine());
 }
 
+DisplayMenu();
+
 do
 {
     switch (userChoice)
     {
         case 1:
-        Console.WriteLine("");
+        DisplayAllProducts(products, productTypes);
         break;
 
         case 2:
@@ -61,8 +64,18 @@ do
 
 void DisplayAllProducts(List<Product> products, List<ProductType> productTypes)
 {
-    throw new NotImplementedException();
-}
+    Console.WriteLine("Products:" );
+
+    foreach (var product in products)
+    {
+        
+        Console.WriteLine($"- {product.Name}");
+
+        Console.WriteLine("-----------------------------------");
+
+    }//close for loop
+
+} // Close Display All Products
 
 void DeleteProduct(List<Product> products, List<ProductType> productTypes)
 {
