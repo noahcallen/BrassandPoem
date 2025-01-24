@@ -1,4 +1,5 @@
-﻿using Inventory;
+﻿using System.Data.Common;
+using Inventory;
 using InventoryType;
 
 int userChoice = 0;
@@ -51,7 +52,7 @@ do
         break;
 
         case 3:
-        Console.WriteLine("");
+        AddProduct(products, productTypes);
         DisplayMenu();
         break;
 
@@ -105,8 +106,51 @@ void DeleteProduct(List<Product> products, List<ProductType> productTypes)
 
 void AddProduct(List<Product> products, List<ProductType> productTypes)
 {
-    throw new NotImplementedException();
-}
+    Console.Write("Enter the Name of the Product: ");
+    string name = Console.ReadLine();
+
+    Console.Write("Enter the Price of the Product(x.xx): ");
+    decimal price = decimal.Parse(Console.ReadLine());;
+
+    Console.Write("Enter Product Type (Brass = 1|Poem = 2): ");
+    int productTypeNew = int.Parse(Console.ReadLine());
+
+    Console.Write("Enter a ProductTypeId(xxx): ");
+    int productTypeId = int.Parse(Console.ReadLine());
+
+    string productTypeName;
+    int productId;
+
+    if (productTypeNew == 1)
+    {
+        productTypeName = "Brass";
+        productId = 1;
+    }
+    else
+    {
+        productTypeName = "Poem";
+        productId = 2;
+    }
+
+    ProductType productType = new ProductType
+    {
+        Name = productTypeName,
+        Id = productId
+    };
+
+    Product newProduct = new Product
+    {
+        Name = name,
+        Price = price,
+        ProductType = productType,
+        ProductTypeId = productTypeId
+    };
+
+    products.Add(newProduct);
+
+    Console.WriteLine("New Product added!");
+
+}//close AddProduct
 
 void UpdateProduct(List<Product> products, List<ProductType> productTypes)
 {
